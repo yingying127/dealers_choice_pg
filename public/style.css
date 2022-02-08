@@ -1,3 +1,43 @@
+* {
+    padding: 5px;
+}
+
+h1, h2, ol {
+    font-family: monospace;
+    text-align: center;
+}
+
 h1 {
     font-size: 50px;
+}
+
+h2, ol {
+    font-size: 25px;
+}
+
+ol {
+    padding: 2rem;
+    font-weight: bold;
+    background-color: lightblue;
+    border: 1px black solid;
+    margin: 0rem 25rem 1rem 25rem;
+}
+
+p {
+    margin: 1rem 15rem 1rem 15rem;
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    text-align: center;
+    padding: 2rem;
+    background-color: lightpink;
+    border: 1px black solid;
+
+}
+
+.title {
+    margin: 1rem 15rem 1rem 15rem;
+    padding: 1rem;
+    background-color: lightblue;
+    border: 1px black solid;
+    font-size: 30px;
 }

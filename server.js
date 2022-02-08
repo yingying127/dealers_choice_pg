@@ -19,15 +19,17 @@ app.get('/', async(req, res, next) => {
         </head>
         <body>
             <h1>Four Fun Facts about Animals!</h1>
+            <h2>Click below to select a fun fact!</h2>
             <div>
-            <h2>Animal</h2>
-            <h2>
+            <ul>
                 ${  
                     animals.map (animal => `
+                    <ol>
                         <a href="/animals/${animal.id}">${animal.name}</a>
+                    </ol>
                     `).join('')
                 }
-            </h2>
+            </ul>
             </div>
         </body>
         </html>
@@ -40,20 +42,31 @@ app.get('/', async(req, res, next) => {
 
 app.get('/animals/:id', async(req, res, next) => {
     try {
-        const response = await client.query('SELECT * FROM animal WHERE id=$1', [req.params.id]);
-        const animals = response.rows[0];
+        const promises = [
+            client.query('SELECT * FROM animal WHERE id=$1', [req.params.id]),
+            client.query('SELECT * FROM funFacts WHERE animal_id=$1', [req.params.id])
+        ]
+        const [animalName, factName] = await Promise.all(promises)
+        const animals = animalName.rows[0];
+        const facts = factName.rows;
         res.send(`
         <html>
         <head>
             <link rel ="stylesheet" href="/style.css" />
         </head>
         <body>
-            <h1>Four Fun Facts about Animals!</h1>
-            <div>
-            <h2><a href='/'>Animal</a> </h2>
-            <h2>
+            <h1><a href="/">More Animals!</a></h1>
+            <h2 class="title">
                 ${animals.name}
             </h2>
+            <div>
+            <p>
+                ${  
+                    facts.map (fact => `
+                        ${fact.fact}
+                    `).join('')
+                }
+            </p>
             </div>
         </body>
         </html>
